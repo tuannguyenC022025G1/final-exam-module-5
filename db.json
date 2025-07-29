@@ -1,1 +1,42 @@
-{}
+{
+  "products": [
+    {
+      "id": 1,
+      "code": "P001",
+      "name": "Men's T-shirt",
+      "importDate": "01/01/2025",
+      "quantity": 100,
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "code": "P002",
+      "name": "Jeans",
+      "importDate": "02/01/2025",
+      "quantity": 50,
+      "categoryId": 2
+    },
+    {
+      "id": 3,
+      "code": "P003",
+      "name": "Women's Dress",
+      "importDate": "05/01/2025",
+      "quantity": 75,
+      "categoryId": 3
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Shirts"
+    },
+    {
+      "id": 2,
+      "name": "Pants"
+    },
+    {
+      "id": 3,
+      "name": "Dresses"
+    }
+  ]
+}

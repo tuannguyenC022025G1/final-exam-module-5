@@ -20,6 +20,7 @@ const App = () => {
       const response = await axios.get('http://localhost:3001/products');
       const sortedProducts = response.data.sort((a, b) => a.quantity - b.quantity);
       setProducts(sortedProducts);
+      console.log('Products fetched:', sortedProducts);
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -29,6 +30,7 @@ const App = () => {
     try {
       const response = await axios.get('http://localhost:3001/categories');
       setCategories(response.data);
+      console.log('Categories fetched:', response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -53,6 +55,12 @@ const App = () => {
   };
 
   const handleUpdate = async (product) => {
+    const inputDate = moment(product.importDate, 'DD/MM/YYYY', true); // Strict mode
+    if (!inputDate.isValid()) {
+      setMessage('Invalid date format. Use DD/MM/YYYY');
+      return;
+    }
+
     if (product.name.length > 100) {
       setMessage('Product name must not exceed 100 characters');
       return;
@@ -60,12 +68,6 @@ const App = () => {
 
     if (product.quantity <= 0 || !Number.isInteger(Number(product.quantity))) {
       setMessage('Quantity must be a positive integer');
-      return;
-    }
-
-    const inputDate = moment(product.importDate, 'DD/MM/YYYY');
-    if (!inputDate.isValid()) {
-      setMessage('Import date must be in DD/MM/YYYY format');
       return;
     }
 
@@ -168,11 +170,15 @@ const App = () => {
             required
           >
             <option value="">Select a category</option>
-            {categories.map(category => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+            {categories.length > 0 ? (
+              categories.map(category => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))
+            ) : (
+              <option disabled>No categories available</option>
+            )}
           </select>
         </div>
         <div className="flex gap-4">
@@ -213,11 +219,15 @@ const App = () => {
           className="p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:w-1/3"
         >
           <option value="">All categories</option>
-          {categories.map(category => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
+          {categories.length > 0 ? (
+            categories.map(category => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))
+          ) : (
+            <option disabled>No categories available</option>
+          )}
         </select>
         <button
           onClick={() => setEditingProduct({})}
@@ -260,7 +270,7 @@ const App = () => {
                   <td className="p-3">{product.importDate}</td>
                   <td className="p-3">{product.quantity}</td>
                   <td className="p-3">
-                    {categories.find(c => c.id === product.categoryId)?.name}
+                    {categories.find(c => c.id === product.categoryId)?.name || 'N/A'}
                   </td>
                   <td className="p-3">
                     <button
