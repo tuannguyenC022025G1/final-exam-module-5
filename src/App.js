@@ -110,61 +110,61 @@ const App = () => {
     };
 
     return (
-      <form onSubmit={handleSubmit} className="p-4 bg-gray-100 rounded-lg">
+      <form onSubmit={handleSubmit} className="p-6 bg-white shadow-lg rounded-lg border border-gray-200">
         <div className="mb-4">
-          <label className="block">Product Code</label>
+          <label className="block text-sm font-medium text-gray-700">Product Code</label>
           <input
             type="text"
             name="code"
             value={formData.code}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="mt-1 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block">Product Name</label>
+          <label className="block text-sm font-medium text-gray-700">Product Name</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="mt-1 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             maxLength={100}
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block">Import Date (DD/MM/YYYY)</label>
+          <label className="block text-sm font-medium text-gray-700">Import Date (DD/MM/YYYY)</label>
           <input
             type="text"
             name="importDate"
             value={formData.importDate}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="mt-1 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="DD/MM/YYYY"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block">Quantity</label>
+          <label className="block text-sm font-medium text-gray-700">Quantity</label>
           <input
             type="number"
             name="quantity"
             value={formData.quantity}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="mt-1 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             min="1"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block">Category</label>
+          <label className="block text-sm font-medium text-gray-700">Category</label>
           <select
             name="categoryId"
             value={formData.categoryId}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="mt-1 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             required
           >
             <option value="">Select a category</option>
@@ -175,11 +175,11 @@ const App = () => {
             ))}
           </select>
         </div>
-        <div className="flex gap-2">
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <div className="flex gap-4">
+          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200">
             Save
           </button>
-          <button type="button" onClick={onCancel} className="bg-gray-500 text-white px-4 py-2 rounded">
+          <button type="button" onClick={onCancel} className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition duration-200">
             Cancel
           </button>
         </div>
@@ -190,27 +190,27 @@ const App = () => {
   const filteredProducts = handleSearch();
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Clothing Product Management</h1>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Clothing Product Management</h1>
       
       {message && (
-        <div className="bg-green-100 text-green-700 p-2 rounded mb-4">
+        <div className="bg-green-100 text-green-800 p-4 rounded-md mb-6 text-center">
           {message}
         </div>
       )}
 
-      <div className="mb-4 flex gap-4">
+      <div className="mb-6 flex gap-4 flex-col sm:flex-row">
         <input
           type="text"
           placeholder="Search by name..."
           value={searchName}
           onChange={(e) => setSearchName(e.target.value)}
-          className="p-2 border rounded"
+          className="p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:w-1/3"
         />
         <select
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
-          className="p-2 border rounded"
+          className="p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:w-1/3"
         >
           <option value="">All categories</option>
           {categories.map(category => (
@@ -221,7 +221,7 @@ const App = () => {
         </select>
         <button
           onClick={() => setEditingProduct({})}
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition duration-200 sm:w-auto"
         >
           Add Product
         </button>
@@ -236,43 +236,45 @@ const App = () => {
       )}
 
       {filteredProducts.length === 0 ? (
-        <div className="text-red-500 text-center p-4">
+        <div className="text-red-500 text-center p-4 bg-red-100 rounded-md">
           No products found
         </div>
       ) : (
-        <table className="w-full border-collapse border">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">Code</th>
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Import Date</th>
-              <th className="border p-2">Quantity</th>
-              <th className="border p-2">Category</th>
-              <th className="border p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map(product => (
-              <tr key={product.id}>
-                <td className="border p-2">{product.code}</td>
-                <td className="border p-2">{product.name}</td>
-                <td className="border p-2">{product.importDate}</td>
-                <td className="border p-2">{product.quantity}</td>
-                <td className="border p-2">
-                  {categories.find(c => c.id === product.categoryId)?.name}
-                </td>
-                <td className="border p-2">
-                  <button
-                    onClick={() => setEditingProduct(product)}
-                    className="bg-blue-500 text-white px-2 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-gray-200 text-gray-700">
+                <th className="p-3 text-left">Code</th>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Import Date</th>
+                <th className="p-3 text-left">Quantity</th>
+                <th className="p-3 text-left">Category</th>
+                <th className="p-3 text-left">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredProducts.map(product => (
+                <tr key={product.id} className="border-t hover:bg-gray-50">
+                  <td className="p-3">{product.code}</td>
+                  <td className="p-3">{product.name}</td>
+                  <td className="p-3">{product.importDate}</td>
+                  <td className="p-3">{product.quantity}</td>
+                  <td className="p-3">
+                    {categories.find(c => c.id === product.categoryId)?.name}
+                  </td>
+                  <td className="p-3">
+                    <button
+                      onClick={() => setEditingProduct(product)}
+                      className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition duration-200"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
